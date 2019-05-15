@@ -22,9 +22,16 @@
         }
         .carouselPagination{
             text-align: center;
+            margin: 20px auto;
         }
         .carouselPagination > span{
-            padding: 5px 15px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            display: inline-block;
+            margin: 0 10px;
+            border-radius: 100%;
+            background: #cccccc;
         }
         .active{
             color: red;
@@ -36,22 +43,25 @@
 <body>
     <div class="carouselWrapper">
         <div class="carouselBox">
-            <img src="img/1.jpg" alt="" width="300">
-            <img src="img/2.jpeg" alt="" width="300">
-            <img src="img/3.jpg" alt="" width="300">
+            <img src="img/1.jpg" alt="" width="300" height="300">
+            <img src="img/2.jpeg" alt="" width="300" height="300">
+            <img src="img/3.jpg" alt="" width="300" height="300">
+            <img src="img/4.jpeg" alt="" width="300" height="300">
         </div>
-        <div class="carouselPagination">
-            <span class="active">第1页</span>
-            <span>第2页</span>
-            <span>第3页</span>
-        </span>
+        <!-- <div class="carouselPagination">
+            <span class="active">1</span>
+            <span>3</span>
+            <span>3</span>
+            <span>4</span>
+        </div> -->
     </div>
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script src="index.js"></script>
     <script>
         let n = 0 //循环变量
         let timer = 3000 //循环时间
-        let pagesize = 3  //图片的个数
+        let pagesize = $(".carouselBox > img").length  //图片的个数
+        createPaginition(pagesize)
 
         $(".carouselPagination > span").on('click',function(e){
             console.dir(e.currentTarget)
@@ -65,11 +75,11 @@
         //实现自动轮播
         var carouselInter = startTimer()
         //鼠标进入自动轮播停止
-        $('.carouselBox').on('mouseenter',function(e){
+        $('.carouselWrapper').on('mouseenter',function(e){
             clearInterval(carouselInter)
         })
         //鼠标离开自动轮播继续
-        $('.carouselBox').on('mouseleave',function(e){
+        $('.carouselWrapper').on('mouseleave',function(e){
             carouselInter = startTimer()
         })
         function startTimer(){
@@ -77,6 +87,16 @@
                 n++
                 $(".carouselPagination > span").eq(n % pagesize).trigger('click')
             },timer)
+        }
+        function createPaginition(pagesize){//根据图片的数目生成页数模块
+            let pagiHtmlInner=''
+            for(var i=0;i<pagesize;i++){
+                let page = i+1
+                pagiHtmlInner += '<span>'+page+'</span>'
+            }
+            let pagiHtml='<div class="carouselPagination">'+pagiHtmlInner+'</div>'
+            $(".carouselWrapper").append(pagiHtml)
+            $(".carouselPagination > span").eq(0).addClass('active')
         }
     </script>
 </body>
