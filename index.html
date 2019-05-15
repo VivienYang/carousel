@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>轮播图</title>
+    <style>
+        html{
+            color: #000000;
+        }
+        .carouselWrapper{
+            width: 300px;
+            display: block;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .carouselWrapper .carouselBox{
+            display: flex;
+            align-items: flex-start;
+            transition: all 0.5s;
+        }
+        .carouselPagination{
+            text-align: center;
+        }
+        .carouselPagination > span{
+            padding: 5px 15px;
+        }
+        .active{
+            color: red;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="carouselWrapper">
+        <div class="carouselBox">
+            <img src="img/1.jpg" alt="" width="300">
+            <img src="img/2.jpeg" alt="" width="300">
+            <img src="img/3.jpg" alt="" width="300">
+        </div>
+        <div class="carouselPagination">
+            <span class="active">第1页</span>
+            <span>第2页</span>
+            <span>第3页</span>
+        </span>
+    </div>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="index.js"></script>
+    <script>
+        let n = 0 //循环变量
+        let timer = 3000 //循环时间
+        let pagesize = 3  //图片的个数
+
+        $(".carouselPagination > span").on('click',function(e){
+            console.dir(e.currentTarget)
+            let index = $(e.currentTarget).index()
+            console.log(index)
+            n = index
+            let p = index * (-300)
+            $(".carouselBox").css({'margin-left':p+'px'})
+            $('.carouselPagination > span').eq(index).addClass('active').siblings('.active').removeClass('active')
+        })
+        //实现自动轮播
+        var carouselInter = startTimer()
+        //鼠标进入自动轮播停止
+        $('.carouselBox').on('mouseenter',function(e){
+            clearInterval(carouselInter)
+        })
+        //鼠标离开自动轮播继续
+        $('.carouselBox').on('mouseleave',function(e){
+            carouselInter = startTimer()
+        })
+        function startTimer(){
+            return setInterval(function(){
+                n++
+                $(".carouselPagination > span").eq(n % pagesize).trigger('click')
+            },timer)
+        }
+    </script>
+</body>
+</html>
