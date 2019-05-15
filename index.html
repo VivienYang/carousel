@@ -9,9 +9,12 @@
         html{
             color: #000000;
         }
+        .none{
+            display: none;
+        }
         .carouselWrapper{
             width: 300px;
-            display: block;
+            /* display: block; */
             margin: 0 auto;
             overflow: hidden;
         }
@@ -41,7 +44,7 @@
     </style>
 </head>
 <body>
-    <div class="carouselWrapper">
+    <div class="carouselWrapper none">
         <div class="carouselBox">
             <img src="img/1.jpg" alt="" width="300" height="300">
             <img src="img/2.jpeg" alt="" width="300" height="300">
@@ -58,6 +61,7 @@
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script src="index.js"></script>
     <script>
+        $('.carouselWrapper').show()
         let n = 0 //循环变量
         let timer = 3000 //循环时间
         let pagesize = $(".carouselBox > img").length  //图片的个数
